@@ -1408,6 +1408,7 @@ def plot_return_quantiles(returns, live_start_date=None, ax=None, **kwargs):
             linestyle="",
         )
         ax.legend(handles=[red_dots], frameon=True, framealpha=0.5)
+    ax.set_xticks(ax.get_xticks())
     ax.set_xticklabels(["Daily", "Weekly", "Monthly"])
     ax.set_title("Return quantiles")
 
