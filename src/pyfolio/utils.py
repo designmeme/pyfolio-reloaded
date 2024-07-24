@@ -375,7 +375,7 @@ def estimate_intraday(returns, positions, transactions, EOD_hour=23):
     txn_val["exposure"] = txn_val.abs().sum(axis=1)
     condition = txn_val["exposure"] == txn_val.groupby(pd.Grouper(freq="24h"))[
         "exposure"
-    ].transform(max)
+    ].transform("max")
     txn_val = txn_val[condition].drop("exposure", axis=1)
 
     # Compute cash delta
