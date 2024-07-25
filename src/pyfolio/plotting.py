@@ -171,7 +171,7 @@ def plot_monthly_returns_heatmap(returns, ax=None, **kwargs):
 
     monthly_ret_table = ep.aggregate_returns(returns, "monthly")
     monthly_ret_table = monthly_ret_table.unstack()
-    monthly_ret_table = (monthly_ret_table.fillna(0) * 100).round(1)
+    monthly_ret_table = monthly_ret_table * 100
 
     # number to month_abbr
     # monthly_ret_table.rename(
@@ -181,11 +181,12 @@ def plot_monthly_returns_heatmap(returns, ax=None, **kwargs):
     sns.heatmap(
         monthly_ret_table,
         annot=True,
-        annot_kws={"size": 9},
+        annot_kws={"size": 8},
         alpha=1.0,
         center=0.0,
         cbar=False,
         cmap=matplotlib.cm.RdYlGn,
+        fmt='.0f',
         ax=ax,
         **kwargs,
     )
@@ -218,9 +219,9 @@ def plot_annual_returns(returns, ax=None, **kwargs):
     if ax is None:
         ax = plt.gca()
 
-    x_axis_formatter = FuncFormatter(utils.percentage)
-    ax.xaxis.set_major_formatter(FuncFormatter(x_axis_formatter))
-    ax.tick_params(axis="x", which="major")
+    # x_axis_formatter = FuncFormatter(utils.percentage)
+    # ax.xaxis.set_major_formatter(FuncFormatter(x_axis_formatter))
+    # ax.tick_params(axis="x", which="major")
 
     ann_ret_df = pd.DataFrame(ep.aggregate_returns(returns, "yearly"))
     ann_ret_df = ann_ret_df.sort_index(ascending=False)
