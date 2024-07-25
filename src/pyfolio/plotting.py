@@ -217,23 +217,29 @@ def plot_annual_returns(returns, ax=None, **kwargs):
     ax.tick_params(axis="x", which="major")
 
     ann_ret_df = pd.DataFrame(ep.aggregate_returns(returns, "yearly"))
+    ann_ret_df = ann_ret_df.sort_index(ascending=False)
+    ann_ret_df = ann_ret_df * 100
 
+    mean_return = ann_ret_df.values.mean()
     ax.axvline(
-        100 * ann_ret_df.values.mean(),
+        mean_return,
         color="red",
         linestyle="--",
         lw=1,
         alpha=0.7,
     )
-    (100 * ann_ret_df.sort_index(ascending=False)).plot(
-        ax=ax, kind="barh", alpha=0.70, **kwargs
+    hbars = ann_ret_df.plot(
+        ax=ax, kind="barh", alpha=0.7, **kwargs
     )
-    ax.axvline(0.0, color="black", linestyle="-", lw=2)
+    ax.bar_label(hbars.containers[0], fmt='%.0f%%', fontsize=9, padding=2, label_type='edge')
+    ax.margins(x=0.15)
+
+    ax.axvline(0.0, color="black", linestyle="-", lw=1.5)
 
     ax.set_ylabel("Year")
-    ax.set_xlabel("Returns")
+    ax.set_xlabel("Returns(%)")
     ax.set_title("Annual returns")
-    ax.legend(["Mean"], frameon=True, framealpha=0.5)
+    ax.legend([f"Mean {mean_return:.0f}%"], frameon=True, framealpha=0.5)
     return ax
 
 
