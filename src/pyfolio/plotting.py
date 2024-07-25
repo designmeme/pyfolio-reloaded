@@ -55,7 +55,7 @@ def customize(func):
     return call_w_context
 
 
-def plotting_context(context="notebook", font_scale=1.5, rc=None):
+def plotting_context(context="notebook", font_scale=1.0, rc=None):
     """
     Create pyfolio default plotting style context.
 
@@ -91,7 +91,13 @@ def plotting_context(context="notebook", font_scale=1.5, rc=None):
     if rc is None:
         rc = {}
 
-    rc_default = {"lines.linewidth": 1.5}
+    rc_default = {
+        "lines.linewidth": 1.5,
+        'font.size': 10,
+        'axes.titlesize': 12,
+        'axes.labelsize': 9,
+        'legend.fontsize': 10,
+    }
 
     # Add defaults if they do not exist
     for name, val in rc_default.items():
