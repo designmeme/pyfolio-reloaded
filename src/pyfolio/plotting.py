@@ -164,14 +164,16 @@ def plot_monthly_returns_heatmap(returns, ax=None, **kwargs):
         ax = plt.gca()
 
     monthly_ret_table = ep.aggregate_returns(returns, "monthly")
-    monthly_ret_table = monthly_ret_table.unstack().round(3)
+    monthly_ret_table = monthly_ret_table.unstack()
+    monthly_ret_table = (monthly_ret_table.fillna(0) * 100).round(1)
 
-    monthly_ret_table.rename(
-        columns={i: m for i, m in enumerate(calendar.month_abbr)}, inplace=True
-    )
+    # number to month_abbr
+    # monthly_ret_table.rename(
+    #     columns={i: m for i, m in enumerate(calendar.month_abbr)}, inplace=True
+    # )
 
     sns.heatmap(
-        monthly_ret_table.fillna(0) * 100.0,
+        monthly_ret_table,
         annot=True,
         annot_kws={"size": 9},
         alpha=1.0,
