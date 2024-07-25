@@ -247,10 +247,10 @@ def extract_round_trips(transactions, portfolio_value=None):
                 roundtrips.append(
                     {
                         "pnl": pnl,
-                        "open_dt": cur_open_dts[0],
+                        "open_dt": cur_open_dts[0] if cur_open_dts else None,
                         "close_dt": dt,
                         "long": price < 0,
-                        "rt_returns": pnl / invested,
+                        "rt_returns": pnl / invested if invested else 0,
                         "symbol": sym,
                     }
                 )
